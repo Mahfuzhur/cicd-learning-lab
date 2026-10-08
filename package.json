@@ -1,0 +1,10 @@
+{
+  "name": "cicd-learning-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node calculator.js",
+    "test": "node --test"
+  }
+}
