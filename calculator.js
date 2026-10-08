@@ -1,7 +1,7 @@
 // Learning exercise: automated tests protect this business rule.
 // Prices are in BDT. The discount should apply to items only.
 export function calculateTotal(subtotal, discountPercent, deliveryFee) {
-  const discount = (subtotal + deliveryFee) * discountPercent / 100;
+  const discount = subtotal * discountPercent / 100;
   return subtotal + deliveryFee - discount;
 }
 
