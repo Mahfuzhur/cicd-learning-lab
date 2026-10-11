@@ -38,7 +38,9 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
@@ -51,3 +53,28 @@ jobs:
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Get the smoke test code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js for browser testing
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
+
+      - name: Install browser test dependencies
+        working-directory: smoke
+        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Install Chromium
+        working-directory: smoke
+        run: npx playwright install --with-deps chromium
+
+      - name: Check the live calculator
+        working-directory: smoke
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: npx playwright test
