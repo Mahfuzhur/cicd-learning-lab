@@ -16,6 +16,9 @@
     button { margin-top: 24px; background: #176849; color: white; border: none; cursor: pointer; }
     input:focus-visible, button:focus-visible { outline: 3px solid #dc9700; outline-offset: 3px; }
     output { display: block; margin-top: 24px; padding: 20px; background: #eaf5ee; border-radius: 8px; font-size: 25px; font-weight: 700; }
+    dl { margin: 24px 0 0; font-variant-numeric: tabular-nums; }
+    dl div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid #e3eae6; }
+    dd { margin: 0; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -31,7 +34,14 @@
       <input id="delivery" type="number" min="0" max="1000000000" step="0.01" value="100" required>
       <button type="submit">Calculate total</button>
     </form>
-    <output id="total" for="subtotal discount delivery" aria-live="polite">Enter your order details.</output>
+    <section aria-label="Order breakdown" aria-live="polite">
+      <dl>
+        <div><dt>Items</dt><dd id="items-amount">—</dd></div>
+        <div><dt>Discount</dt><dd id="discount-amount">—</dd></div>
+        <div><dt>Delivery</dt><dd id="delivery-amount">—</dd></div>
+      </dl>
+      <output id="total" for="subtotal discount delivery">Enter your order details.</output>
+    </section>
   </main>
   <script type="module" src="./web.js"></script>
 </body>
